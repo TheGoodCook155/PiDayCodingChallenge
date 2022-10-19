@@ -117,6 +117,10 @@ fun MainScreen(navController: NavController = rememberNavController()){
 
             var index = rotateReturnedValue.value.toInt()
 
+            if (index >= PI_ARR_DIGIT.size - 1){
+                index = PI_ARR_DIGIT.size - 2
+            }
+
 
             var chosen = PI_ARR_DIGIT[index]
 
@@ -139,7 +143,7 @@ fun MainScreen(navController: NavController = rememberNavController()){
                 }
 
                 showText.value = true
-
+                index = 0
 
             }) {
                 Text(text = "Try your PI luck")
