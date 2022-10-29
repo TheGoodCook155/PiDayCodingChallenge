@@ -1,5 +1,6 @@
 package com.pi.pidaych.ui.views
 
+import android.content.Context
 import android.os.Build
 import android.util.Log
 import android.view.MotionEvent
@@ -22,8 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.pi.pidaych.R
-import java.io.*
-import java.util.*
+import com.pi.pidaych.ui.viewmodel.MainViewModel
 import kotlin.math.PI
 import kotlin.math.atan2
 
@@ -35,33 +35,21 @@ fun MainScreen(navController: NavController = rememberNavController()){
         mutableStateOf("")
     }
 
+    val context : Context = LocalContext.current
+
+    val mainViewModel = MainViewModel()
+
     var rotateReturnedValue = remember {
         mutableStateOf(0L)
     }
 
-    var PI_ARR_DIGIT = mutableListOf<Int>()
+    var PI_ARR_DIGIT = mainViewModel.getPINumbers(context)
+
+    Log.d("data", "MainScreen: Size = ${PI_ARR_DIGIT.size} DATA = ${PI_ARR_DIGIT}")
 
     var showText = remember {
-
         mutableStateOf(false)
     }
-
-    val context = LocalContext.current
-    val inputStream: InputStream = context.assets.open("milion_PI.txt")
-
-    val str = inputStream.bufferedReader().use {
-        it.readText()
-    }
-
-
-   str.forEach { char ->
-
-       if(char != '.'){
-           var digit = Integer.parseInt(char+"")
-           PI_ARR_DIGIT.add(digit)
-       }
-
-   }
 
 
     var betNum = remember {
